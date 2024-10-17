@@ -10,13 +10,10 @@ export default function CountdownTimer({ initialTime }: { initialTime: number })
 
     const [timeRemaining, setTimeRemaining] = useState(time);
 
-    const { isSupported, released, request, release } = useWakeLock({
-        onRequest: () => alert('Screen Wake Lock: requested!'),
-        onError: () => alert('An error happened 💥'),
-        onRelease: () => alert('Screen Wake Lock: released!'),
-    });
+    const { request, release } = useWakeLock();
 
     useEffect(() => {
+        request();
         const timerInterval = setInterval(() => {
             setTimeRemaining((prevTime) => {
                 if (prevTime === 0) {
@@ -29,7 +26,10 @@ export default function CountdownTimer({ initialTime }: { initialTime: number })
             });
         }, 1000);
 
-        return () => clearInterval(timerInterval);
+        return () => {
+            clearInterval(timerInterval)
+            release();
+        };
     }, []);
 
     // const hours = Math.floor(timeRemaining / 3600);
@@ -42,19 +42,6 @@ export default function CountdownTimer({ initialTime }: { initialTime: number })
                 <span style={{ ['--value' as string]: minutes }}></span>:
                 <span style={{ ['--value' as string]: seconds }}></span>
             </span>
-            <div>
-                <p>
-                    Screen Wake Lock API supported: <b>{`${isSupported}`}</b>
-                    <br />
-                    Released: <b>{`${released}`}</b>
-                </p>
-                <button className="btn btn-accent"
-                    type="button"
-                    onClick={() => (released === false ? release() : request())}
-                >
-                    {released === false ? 'Release' : 'Request'}
-                </button>
-            </div>
         </div>
     );
 };
