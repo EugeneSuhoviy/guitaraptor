@@ -2,10 +2,19 @@
 
 import React, { useState, useEffect } from 'react';
 
+import { useWakeLock } from 'react-screen-wake-lock';
+
+
 export default function CountdownTimer({ initialTime }: { initialTime: number }) {
     const time = initialTime * 60;
 
     const [timeRemaining, setTimeRemaining] = useState(time);
+
+    const { isSupported, released, request, release } = useWakeLock({
+        onRequest: () => alert('Screen Wake Lock: requested!'),
+        onError: () => alert('An error happened 💥'),
+        onRelease: () => alert('Screen Wake Lock: released!'),
+    });
 
     useEffect(() => {
         const timerInterval = setInterval(() => {
@@ -33,6 +42,19 @@ export default function CountdownTimer({ initialTime }: { initialTime: number })
                 <span style={{ ['--value' as string]: minutes }}></span>:
                 <span style={{ ['--value' as string]: seconds }}></span>
             </span>
+            <div>
+                <p>
+                    Screen Wake Lock API supported: <b>{`${isSupported}`}</b>
+                    <br />
+                    Released: <b>{`${released}`}</b>
+                </p>
+                <button className="btn btn-accent"
+                    type="button"
+                    onClick={() => (released === false ? release() : request())}
+                >
+                    {released === false ? 'Release' : 'Request'}
+                </button>
+            </div>
         </div>
     );
 };
