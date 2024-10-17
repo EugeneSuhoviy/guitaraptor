@@ -4,10 +4,13 @@ import { revalidatePath } from 'next/cache';
 import { supabase } from '@/app/lib/supabase'
 import { redirect } from 'next/navigation';
 
-// export async function getAll(id: number) {
+export async function getAllExercises() {
+    const { data: exercises, error } = await supabase
+    .from('exercises')
+    .select('*')
 
-//     revalidatePath('/');
-// }
+    return exercises;
+}
 
 export async function getById(id: number) {
     const { data: exercise, error } = await supabase
@@ -21,7 +24,7 @@ export async function getById(id: number) {
         return null;
     }
 
-    return exercise
+    return exercise;
 }
 
 export async function createExercise(formData: FormData) {
@@ -36,7 +39,7 @@ export async function createExercise(formData: FormData) {
         .insert({ bpm: bpm, name: name, duration: duration })
 
     revalidatePath('/');
-    redirect('/')
+    redirect('/');
 }
 
 export async function deleteExercise(id: number) {
@@ -48,7 +51,7 @@ export async function deleteExercise(id: number) {
         .eq('id', id);
 
     revalidatePath('/');
-    redirect('/')
+    redirect('/');
 }
 
 export async function updateExercise(id: number, formData: FormData) {
@@ -63,9 +66,9 @@ export async function updateExercise(id: number, formData: FormData) {
         .from('exercises')
         .update({ bpm: bpm, name: name, duration: duration })
         .eq('id', id)
-        .select()
+        .select();
 
     revalidatePath('/');
-    redirect('/')
+    redirect('/');
 }
 
