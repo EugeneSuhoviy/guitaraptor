@@ -1,3 +1,4 @@
+import DeleteForm from "@/app/components/delete-form";
 import EditForm from "@/app/components/edit-form";
 import { getById } from "@/app/lib/actions";
 
@@ -9,6 +10,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
     <>
       <main className="p-3">
         <EditForm data={data} />
+        <DeleteForm id={Number(params.id)} />
       </main>
     </>
   );

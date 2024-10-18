@@ -28,15 +28,16 @@ export async function getById(id: number) {
 }
 
 export async function createExercise(formData: FormData) {
-    const { name, duration, bpm } = {
+    const { name, duration, bpm, comment } = {
         name: formData.get('name'),
         duration: formData.get('duration'),
         bpm: formData.get('bpm'),
+        comment: formData.get('comment'),
     };
 
     const { data: exercises, error } = await supabase
         .from('exercises')
-        .insert({ bpm: bpm, name: name, duration: duration })
+        .insert({ bpm: bpm, name: name, duration: duration, comment: comment })
 
     revalidatePath('/');
     redirect('/');
@@ -53,15 +54,16 @@ export async function deleteExercise(id: number) {
 }
 
 export async function updateExercise(id: number, formData: FormData) {
-    const { name, duration, bpm } = {
+    const { name, duration, bpm, comment } = {
         name: formData.get('name'),
         duration: formData.get('duration'),
         bpm: formData.get('bpm'),
+        comment: formData.get('comment'),
     };
 
     const { data, error } = await supabase
         .from('exercises')
-        .update({ bpm: bpm, name: name, duration: duration })
+        .update({ bpm: bpm, name: name, duration: duration, comment: comment })
         .eq('id', id)
         .select();
 
