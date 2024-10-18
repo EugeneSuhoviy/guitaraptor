@@ -1,5 +1,6 @@
 import { createExercise } from "@/app/lib/actions";
 import BpmRange from "./ui/bpm-range";
+import LoadingBtn from "@/app/components/loading-btn";
 
 export default async function CreateForm() {
     return <form action={createExercise}>
@@ -15,7 +16,9 @@ export default async function CreateForm() {
 
                     <BpmRange />
 
-                    <button type="submit" className="btn btn-primary">Save</button>
+                    <textarea className="textarea textarea-bordered w-full mb-5" name="comment" placeholder="Comment"></textarea>
+
+                    <LoadingBtn name={'Save'} loadingPlaceholder={'Saving'} className={'btn btn-primary'}/>
                 </div>
             </div>
         </div>

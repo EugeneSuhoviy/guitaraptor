@@ -1,13 +1,14 @@
 import { updateExercise } from "@/app/lib/actions";
 import BpmRange from "./ui/bpm-range";
-import DeleteBtn from "@/app/components/delete-btn";
+import LoadingBtn from "./loading-btn";
 
 interface Exercise {
     id: number,
     created_at: string,
     bpm: number,
     name: string,
-    duration: number
+    duration: number,
+    comment: string
 }
 
 export default async function EditForm({ data }: { data: Exercise }) {
@@ -27,11 +28,13 @@ export default async function EditForm({ data }: { data: Exercise }) {
 
                         <BpmRange defaultBpm={data.bpm} />
 
-                        <button type="submit" className="btn btn-primary">Save</button>
+                        <textarea className="textarea textarea-bordered w-full mb-5" name="comment" placeholder="Comment" defaultValue={data.comment}></textarea>
+
+
+                        <LoadingBtn name={'Save'} loadingPlaceholder={'Saving'} className="btn btn-primary" />
                     </div>
                 </div>
             </div>
         </form>
-        <DeleteBtn id={data.id} />
     </>
 }
