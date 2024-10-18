@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="p-3">
+      <main className="p-5">
         {exercises?.map((item, index) => {
           return <div key={index}>
             <Exercise name={item.name} bpm={item.bpm} duration={item.duration} id={item.id} />

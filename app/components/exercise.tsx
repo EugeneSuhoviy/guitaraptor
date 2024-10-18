@@ -6,7 +6,6 @@ import CountdownTimer from './countdown-timer';
 import { useWakeLock } from 'react-screen-wake-lock';
 
 export default function Exercise({ id, name, bpm, duration }: { id: number, name: string, bpm: number, duration: number }) {
-
     const [isStarted, setIsStarted] = useState(false)
     const { request, release } = useWakeLock();
 

@@ -14,6 +14,6 @@ export default function BpmRange({ defaultBpm }: {defaultBpm?: number}) {
     return <>
         <span>BPM:</span>
         <span>{bpm}</span>
-        <input type="range" name="bpm" min="0" max="200" value={bpm} className="range range-lg mb-5" onChange={handleChange} />
+        <input type="range" name="bpm" min="0" max="200" value={bpm} className="range range-lg range-primary  mb-5" onChange={handleChange} />
     </>
 }

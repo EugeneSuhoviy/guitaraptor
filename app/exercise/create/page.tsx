@@ -4,7 +4,7 @@ export default async function Create() {
 
   return (
     <>
-      <main className="p-3">
+      <main className="p-5">
         <CreateForm />
       </main>
     </>
