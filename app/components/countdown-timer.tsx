@@ -2,18 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { useWakeLock } from 'react-screen-wake-lock';
-
-
 export default function CountdownTimer({ initialTime }: { initialTime: number }) {
     const time = initialTime * 60;
-
     const [timeRemaining, setTimeRemaining] = useState(time);
 
-    const { request, release } = useWakeLock();
-
     useEffect(() => {
-        request();
         const timerInterval = setInterval(() => {
             setTimeRemaining((prevTime) => {
                 if (prevTime === 0) {
@@ -28,7 +21,6 @@ export default function CountdownTimer({ initialTime }: { initialTime: number })
 
         return () => {
             clearInterval(timerInterval)
-            release();
         };
     }, []);
 

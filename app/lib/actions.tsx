@@ -43,8 +43,6 @@ export async function createExercise(formData: FormData) {
 }
 
 export async function deleteExercise(id: number) {
-
-
     const { error } = await supabase
         .from('exercises')
         .delete()
@@ -55,7 +53,6 @@ export async function deleteExercise(id: number) {
 }
 
 export async function updateExercise(id: number, formData: FormData) {
-
     const { name, duration, bpm } = {
         name: formData.get('name'),
         duration: formData.get('duration'),
@@ -71,4 +68,3 @@ export async function updateExercise(id: number, formData: FormData) {
     revalidatePath('/');
     redirect('/');
 }
-
