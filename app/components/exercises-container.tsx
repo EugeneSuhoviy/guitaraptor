@@ -18,13 +18,12 @@ interface ExercisesContainerProps {
 }
 
 export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
-
-
-
     useEffect(() => {
         const container = document.querySelector('.exercises')!
         const swapy = createSwapy(container, {
-            swapMode: 'hover'
+            swapMode: 'hover',
+            animation: 'dynamic',
+            autoScrollOnDrag: true
         })
 
         swapy.onSwap(({ data }) => {
@@ -40,6 +39,10 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
         swapy.onSwapStart(() => {
             console.log('start')
         })
+
+
+        // temporary disabled
+        swapy.enable(false)
 
         return () => {
             swapy.destroy()
