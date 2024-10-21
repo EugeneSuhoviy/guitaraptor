@@ -10,7 +10,7 @@ export default async function Home() {
     <>
       <main className="p-5">
         <ExercisesContainer exercises={exercises} />
-        <Link role="button" className="btn" href="/exercise/create">Add exercise</Link>
+        <Link role="button" className="btn btn-accent my-4" href="/exercise/create">Add exercise</Link>
       </main>
     </>
   );
