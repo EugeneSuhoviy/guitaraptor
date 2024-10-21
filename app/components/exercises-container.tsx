@@ -1,6 +1,6 @@
 'use client';
 
-import { createSwapy } from "swapy";
+// import { createSwapy } from "swapy";
 import Exercise from "./exercise";
 import { useEffect } from "react";
 
@@ -19,34 +19,34 @@ interface ExercisesContainerProps {
 
 export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
     useEffect(() => {
-        const container = document.querySelector('.exercises')!
-        const swapy = createSwapy(container, {
-            swapMode: 'hover',
-            animation: 'dynamic',
-            autoScrollOnDrag: true
-        })
+        // const container = document.querySelector('.exercises')!
+        // const swapy = createSwapy(container, {
+        //     swapMode: 'hover',
+        //     animation: 'dynamic',
+        //     autoScrollOnDrag: true
+        // })
 
-        swapy.onSwap(({ data }) => {
-            console.log('swap', data);
-            // localStorage.setItem('slotItem', JSON.stringify(data.object))
-        })
+        // swapy.onSwap(({ data }) => {
+        //     console.log('swap', data);
+        //     // localStorage.setItem('slotItem', JSON.stringify(data.object))
+        // })
 
-        swapy.onSwapEnd(({ data, hasChanged }) => {
-            console.log(hasChanged);
-            console.log('end', data);
-        })
+        // swapy.onSwapEnd(({ data, hasChanged }) => {
+        //     console.log(hasChanged);
+        //     console.log('end', data);
+        // })
 
-        swapy.onSwapStart(() => {
-            console.log('start')
-        })
+        // swapy.onSwapStart(() => {
+        //     console.log('start')
+        // })
 
 
-        // temporary disabled
-        swapy.enable(false)
+        // // temporary disabled
+        // swapy.enable(false)
 
-        return () => {
-            swapy.destroy()
-        }
+        // return () => {
+        //     swapy.destroy()
+        // }
     }, [])
 
     return <>
