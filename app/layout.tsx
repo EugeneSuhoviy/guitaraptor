@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="cupcake">
-      <body>
+      <body className="max-w-3xl mx-auto">
           <Header />
           {children}
       </body>

@@ -42,8 +42,8 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
                 <div>time: {duration}</div>
             </div>
             {isStarted ? <CountdownTimer initialTime={duration} /> : ''}
-            <Link role="button" className="btn ml-auto" href={`/exercise/edit/${id}`}>Edit</Link>
+            <Link role="button" className="btn btn-secondary ml-auto" href={`/exercise/edit/${id}`}>Edit</Link>
         </div>
-        <div className="divider"></div>
+        {/* <div className="divider"></div> */}
     </>
 }

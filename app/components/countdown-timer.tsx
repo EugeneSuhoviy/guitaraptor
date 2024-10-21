@@ -36,7 +36,7 @@ export default function CountdownTimer({ initialTime }: { initialTime: number })
     return (
         <>
             <div>
-                <span className="countdown font-mono text-6xl bg-accent p-1">
+                <span className="countdown font-mono text-6xl rounded-xl bg-accent p-1">
                     <span style={{ ['--value' as string]: minutes }}></span>:
                     <span style={{ ['--value' as string]: seconds }}></span>
                 </span>
