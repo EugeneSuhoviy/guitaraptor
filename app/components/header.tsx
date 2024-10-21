@@ -31,7 +31,7 @@ export default function Header() {
                     </svg>
                 </label>
             </div>
-            <h1 className="mx-auto font-bold text-3xl">GUITARAPTOR &nbsp; 🎸🦖</h1>
+            <h1 className="mx-auto font-bold text-3xl">GUITARAPTOR</h1>
             <div>
                 <label className="swap swap-rotate">
                     {/* this hidden checkbox controls the state */}
