@@ -4,12 +4,21 @@ import Link from 'next/link'
 import { useState } from 'react'
 import CountdownTimer from './countdown-timer';
 import { useWakeLock } from 'react-screen-wake-lock';
+import { useStore } from '@/app/store/exercise';
 
 export default function Exercise({ id, name, bpm, duration }: { id: number, name: string, bpm: number, duration: number }) {
-    const [isStarted, setIsStarted] = useState(false)
     const { request, release } = useWakeLock();
+    const [isStarted, setIsStarted] = useState(false)
+
+    const runningExerciseId = useStore((state) => state.runningExerciseId)
+
+    if (isStarted && runningExerciseId !== id) {
+        setIsStarted(false)
+    }
 
     function handleClick() {
+        useStore.setState({ runningExerciseId: id });
+
         setIsStarted((prevState) => {
             if (prevState) {
                 release();
