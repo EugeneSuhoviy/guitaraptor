@@ -2,7 +2,7 @@
 
 import Exercise from "./exercise";
 
-interface Exercise {
+interface ExerciseProps {
     id: number,
     created_at: string,
     bpm: number,
@@ -11,7 +11,11 @@ interface Exercise {
     comment: string
 }
 
-export default function ExercisesContainer({ exercises }: { exercises: [Exercise] }) {
+interface ExercisesContainerProps {
+    exercises: ExerciseProps[];
+}
+
+export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
     return <>
         {exercises?.map((item, index) => {
             return <div key={index}>

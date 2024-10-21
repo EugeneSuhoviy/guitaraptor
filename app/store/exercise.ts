@@ -1,6 +1,11 @@
 import { create } from 'zustand'
 
-export const useStore = create((set) => ({
+interface StoreState {
+    runningExerciseId: number | null;
+}
+
+
+export const useStore = create<StoreState>((set) => ({
     runningExerciseId: null,
     setRunningExerciseId: (id: number) => set({ runningExerciseId: id }),
 }))

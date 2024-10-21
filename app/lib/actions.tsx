@@ -3,13 +3,21 @@
 import { revalidatePath } from 'next/cache';
 import { supabase } from '@/app/lib/supabase'
 import { redirect } from 'next/navigation';
+interface Exercise {
+    id: number,
+    created_at: string,
+    bpm: number,
+    name: string,
+    duration: number,
+    comment: string
+}
 
 export async function getAllExercises() {
     const { data: exercises, error } = await supabase
     .from('exercises')
     .select('*')
 
-    return exercises;
+    return exercises as Exercise[];
 }
 
 export async function getById(id: number) {
