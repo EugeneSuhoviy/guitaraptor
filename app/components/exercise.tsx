@@ -37,12 +37,12 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
                 <button className="btn btn-primary mr-5" onClick={handleClick}>Start</button>
             }
             <div className="flex items-left flex-col mr-auto">
-                <div>name: {name}</div>
-                <div>bpm: {bpm}</div>
-                <div>time: {duration}</div>
+                {!isStarted ? <div>name: {name}</div> : ''}
+                {!isStarted ? <div>bpm: {bpm}</div> : <div className='flex flex-col'><span className='text-xl font-bold'>{bpm}</span><span>BPM</span></div>}
+                {!isStarted ? <div>time: {duration}</div> : ''}
             </div>
             {isStarted ? <CountdownTimer initialTime={duration} /> : ''}
-            <Link role="button" className="btn btn-secondary ml-auto" href={`/exercise/edit/${id}`}>Edit</Link>
+            {!isStarted ? <Link role="button" className="btn btn-secondary ml-auto" href={`/exercise/edit/${id}`}>Edit</Link> : ''}
         </div>
         {/* <div className="divider"></div> */}
     </>
