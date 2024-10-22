@@ -1,7 +1,7 @@
+import Link from "next/link";
 
 export default function Header() {
     return <>
-    
         <div className="p-5 flex items-center">
             <div>
                 <label className="btn btn-circle swap swap-rotate">
@@ -31,11 +31,11 @@ export default function Header() {
                     </svg>
                 </label>
             </div>
-            <h1 className="mx-auto font-bold text-3xl">GUITARAPTOR</h1>
+            <Link href={'/'} className="mx-auto"><h1 className="mx-auto font-bold text-3xl">GUITARAPTOR</h1></Link> 
             <div>
                 <label className="swap swap-rotate">
                     {/* this hidden checkbox controls the state */}
-                    <input type="checkbox" />
+                    <input type="checkbox" className="theme-controller" value="night" />
 
                     {/* sun icon */}
                     <svg

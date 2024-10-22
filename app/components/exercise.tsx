@@ -33,7 +33,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
     return <>
         <div className="mb-1 w-full flex items-center p-5" >
             {isStarted ?
-                <button className="btn btn-primary mr-5" onClick={handleClick}>Stop</button> :
+                <button className="btn btn-secondary mr-5" onClick={handleClick}>Stop</button> :
                 <button className="btn btn-primary mr-5" onClick={handleClick}>Start</button>
             }
             <div className="flex items-left flex-col mr-auto">
