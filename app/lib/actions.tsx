@@ -9,13 +9,15 @@ interface Exercise {
     bpm: number,
     name: string,
     duration: number,
-    comment: string
+    comment: string,
+    order: number
 }
 
-export async function getAllExercises() {
+export async function getAllExercises() {    
     const { data: exercises, error } = await supabase
     .from('exercises')
     .select('*')
+    .order('order', { ascending: true });
 
     return exercises as Exercise[];
 }
