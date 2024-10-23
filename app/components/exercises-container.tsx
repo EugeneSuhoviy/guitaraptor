@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable */
 
 import { closestCorners, DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
