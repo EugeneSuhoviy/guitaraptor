@@ -5,8 +5,24 @@ import { useState } from 'react'
 import CountdownTimer from './countdown-timer';
 import { useWakeLock } from 'react-screen-wake-lock';
 import { useStore } from '@/app/store/exercise';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { Bars2Icon } from '@heroicons/react/24/outline'
 
 export default function Exercise({ id, name, bpm, duration }: { id: number, name: string, bpm: number, duration: number }) {
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+    } = useSortable({ id: id, transition: null,} );
+
+    const style = {
+        transition,
+        transform: CSS.Transform.toString(transform)
+    };
+
     const { request, release } = useWakeLock();
     const [isStarted, setIsStarted] = useState(false)
 
@@ -31,7 +47,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
     }
 
     return <>
-        <div className="mb-1 w-full flex items-center p-5" >
+        <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
             {isStarted ?
                 <button className="btn btn-secondary mr-5" onClick={handleClick}>Stop</button> :
                 <button className="btn btn-primary mr-5" onClick={handleClick}>Start</button>
@@ -43,7 +59,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
             </div>
             {isStarted ? <CountdownTimer initialTime={duration} /> : ''}
             {!isStarted ? <Link role="button" className="btn btn-secondary ml-auto" href={`/exercise/edit/${id}`}>Edit</Link> : ''}
+            <button {...attributes} {...listeners} className='cursor-move' type='button'><Bars2Icon className="size-6 ml-2" /></button>
         </div>
-        {/* <div className="divider"></div> */}
     </>
 }
