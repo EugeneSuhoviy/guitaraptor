@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable */
 
-import { closestCorners, DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
+import { closestCorners, DndContext, DragEndEvent, TouchSensor, UniqueIdentifier, useSensor, useSensors } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import dynamic from "next/dynamic";
@@ -82,9 +82,15 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
         });
     };
 
+    const touchSensor = useSensor(TouchSensor);
+
+    const sensors = useSensors(
+        touchSensor,
+    );
+
     return <>
         <ul className="exercises">
-            <DndContext collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
+            <DndContext sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
                 <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>
                     {copyExercises?.map((item, index) => {
                         return <li key={index} className="bg-base-300 rounded-xl mb-2">
