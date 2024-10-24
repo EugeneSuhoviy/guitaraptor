@@ -16,7 +16,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
         setNodeRef,
         transform,
         transition,
-    } = useSortable({ id: id, transition: null, });
+    } = useSortable({ id: id, transition: null });
 
     const style = {
         transition,
@@ -47,7 +47,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
     }
 
     return <>
-        <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
+        <div className="mb-1 w-full flex items-center p-5 touch-none" ref={setNodeRef} style={style}>
             <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
                 {isStarted ? 'Stop' : 'Start'}
             </button>

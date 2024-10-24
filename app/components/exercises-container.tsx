@@ -1,6 +1,6 @@
 'use client';
 
-import { closestCorners, DndContext, DragEndEvent, TouchSensor, UniqueIdentifier, useSensor, useSensors } from "@dnd-kit/core";
+import { closestCorners, DndContext, DragEndEvent, PointerSensor, TouchSensor, UniqueIdentifier, useSensor, useSensors } from "@dnd-kit/core";
 import { useState } from "react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import dynamic from "next/dynamic";
@@ -26,7 +26,7 @@ interface ExercisesContainerProps {
 export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
     const [copyExercises, setCopyExercises] = useState<ExerciseProps[]>([...exercises]);
     const getExercisesPos = (id: UniqueIdentifier | undefined) => copyExercises.findIndex((exercise) => exercise.id === id);
-    
+
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
 
@@ -66,10 +66,18 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
         });
     };
 
-    const touchSensor = useSensor(TouchSensor);
+    const touchSensor = useSensor(TouchSensor, {
+        activationConstraint: {
+            delay: 250,
+            tolerance: 5,
+        },
+    });
+
+    const pointerSensor = useSensor(PointerSensor);
 
     const sensors = useSensors(
-        touchSensor,
+        pointerSensor,
+        touchSensor
     );
 
     return <>
