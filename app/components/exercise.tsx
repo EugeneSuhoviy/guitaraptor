@@ -50,7 +50,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
     }
 
     return <>
-        <div className="mb-1 w-full flex items-center p-5 touch-none" ref={setNodeRef} style={style}>
+        <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
             <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
                 {isStarted ? 'Stop' : 'Start'}
             </button>
@@ -72,8 +72,6 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
             {isStarted && <CountdownTimer initialTime={duration} />}
             {!isStarted && (
                 <>
-
-
                     <div className="dropdown dropdown-bottom dropdown-end">
                         <button tabIndex={0} role="button" className="btn btn-square btn-ghost ml-auto">
                             <svg
@@ -118,7 +116,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
                     {/* <Link role="button" className="btn btn-secondary ml-auto" href={`/exercise/edit/${id}`}>
                         Edit
                     </Link> */}
-                    <button {...attributes} {...listeners} className="cursor-move" type="button">
+                    <button {...attributes} {...listeners} className="cursor-move touch-none" type="button">
                         <Bars2IconOutline className="size-6 ml-2" />
                     </button>
                 </>
