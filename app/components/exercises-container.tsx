@@ -1,13 +1,11 @@
 'use client';
-/* eslint-disable */
 
 import { closestCorners, DndContext, DragEndEvent, TouchSensor, UniqueIdentifier, useSensor, useSensors } from "@dnd-kit/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import dynamic from "next/dynamic";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { supabase } from "@/app/lib/supabase";
-import { useRouter } from 'next/navigation';
 
 const Exercise = dynamic(() => import('./exercise'), { ssr: false });
 
@@ -26,17 +24,11 @@ interface ExercisesContainerProps {
 }
 
 export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
-    const router = useRouter();
-
     const [copyExercises, setCopyExercises] = useState<ExerciseProps[]>([...exercises]);
-
-    const [swappedItem, setSwappedItem] = useState([]);
-
     const getExercisesPos = (id: UniqueIdentifier | undefined) => copyExercises.findIndex((exercise) => exercise.id === id);
-
+    
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
-
 
         if (active.id === over?.id) return
 
@@ -46,38 +38,30 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
 
             const updatedItems = arrayMove(items, originalPos, newPos);
 
-
-            const swappedExercise1 = items[originalPos]
-            const swappedExercise2 = items[newPos]
-
+            updatedItems.forEach((item, index) => {
+                item.order = index + 1;
+            });
 
             const updateDatabase = async () => {
                 try {
-                    const { error: oldIndexError } = await supabase
-                        .from('exercises')
-                        .update({ order: swappedExercise1.order })
-                        .eq('id', swappedExercise2.id);
+                    const promises = updatedItems.map(async (item) => {
+                        const { error } = await supabase
+                            .from('exercises')
+                            .update({ order: item.order })
+                            .eq('id', item.id);
 
-                    // if (oldIndexError) {
-                    //     console.error(`Error updating order for exerciseId ${updatedItems[oldIndex].id}:`, oldIndexError);
-                    // }
+                        if (error) {
+                            console.error(`Error updating order for exerciseId ${item.id}:`, error);
+                        }
+                    });
 
-                    const { error: newIndexError } = await supabase
-                        .from('exercises')
-                        .update({ order: swappedExercise2.order })
-                        .eq('id', swappedExercise1.id);
-
-                    // if (newIndexError) {
-                    //     console.error(`Error updating order for exerciseId ${updatedItems[newIndex].id}:`, newIndexError);
-                    // }
+                    await Promise.all(promises);
                 } catch (err) {
                     console.error('Error updating order in database:', err);
                 }
             };
 
-
-            // updateDatabase();
-            // router.refresh();
+            updateDatabase();
             return updatedItems;
         });
     };

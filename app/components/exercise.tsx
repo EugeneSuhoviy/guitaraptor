@@ -16,7 +16,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
         setNodeRef,
         transform,
         transition,
-    } = useSortable({ id: id, transition: null,} );
+    } = useSortable({ id: id, transition: null, });
 
     const style = {
         transition,
@@ -48,18 +48,35 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
 
     return <>
         <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
-            {isStarted ?
-                <button className="btn btn-secondary mr-5" onClick={handleClick}>Stop</button> :
-                <button className="btn btn-primary mr-5" onClick={handleClick}>Start</button>
-            }
+            <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
+                {isStarted ? 'Stop' : 'Start'}
+            </button>
             <div className="flex items-left flex-col mr-auto">
-                {!isStarted ? <div>name: {name}</div> : ''}
-                {!isStarted ? <div>bpm: {bpm}</div> : <div className='flex flex-col'><span className='text-xl font-bold'>{bpm}</span><span>BPM</span></div>}
-                {!isStarted ? <div>time: {duration}</div> : ''}
+                {!isStarted && (
+                    <>
+                        <div>name: {name}</div>
+                        <div>bpm: {bpm}</div>
+                        <div>time: {duration}</div>
+                    </>
+                )}
+                {isStarted && (
+                    <div className='flex flex-col'>
+                        <span className='text-xl font-bold'>{bpm}</span>
+                        <span>BPM</span>
+                    </div>
+                )}
             </div>
-            {isStarted ? <CountdownTimer initialTime={duration} /> : ''}
-            {!isStarted ? <Link role="button" className="btn btn-secondary ml-auto" href={`/exercise/edit/${id}`}>Edit</Link> : ''}
-            <button {...attributes} {...listeners} className='cursor-move' type='button'><Bars2Icon className="size-6 ml-2" /></button>
+            {isStarted && <CountdownTimer initialTime={duration} />}
+            {!isStarted && (
+                <>
+                    <Link role="button" className="btn btn-secondary ml-auto" href={`/exercise/edit/${id}`}>
+                        Edit
+                    </Link>
+                    <button {...attributes} {...listeners} className="cursor-move" type="button">
+                        <Bars2Icon className="size-6 ml-2" />
+                    </button>
+                </>
+            )}
         </div>
     </>
 }
