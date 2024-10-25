@@ -10,9 +10,16 @@ import { CSS } from '@dnd-kit/utilities';
 import { Bars2Icon as Bars2IconOutline } from '@heroicons/react/24/outline'
 import { Bars2Icon as Bars2IconSolid, PencilSquareIcon, TrashIcon, DocumentDuplicateIcon } from '@heroicons/react/16/solid'
 
+interface ExerciseProps {
+    id: number,
+    name: string,
+    bpm: number,
+    duration: number,
+    handleDelete: (id: number) => void,
+    handleDuplicate: (id: number) => void
+}
 
-
-export default function Exercise({ id, name, bpm, duration }: { id: number, name: string, bpm: number, duration: number }) {
+export default function Exercise({ id, name, bpm, duration, handleDelete, handleDuplicate }: ExerciseProps) {
     const {
         attributes,
         listeners,
@@ -51,6 +58,7 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
 
     return <>
         <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
+            {id}
             <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
                 {isStarted ? 'Stop' : 'Start'}
             </button>
@@ -94,13 +102,13 @@ export default function Exercise({ id, name, bpm, duration }: { id: number, name
                                 </Link>
                             </li>
                             <li>
-                                <a>
+                                <a onClick={() => { handleDelete(id) }}>
                                     <TrashIcon className="size-4" />
                                     Delete
                                 </a>
                             </li>
                             <li>
-                                <a>
+                                <a onClick={() => {handleDuplicate(id)}}>
                                     <DocumentDuplicateIcon className="size-4" />
                                     Duplicate
                                 </a>

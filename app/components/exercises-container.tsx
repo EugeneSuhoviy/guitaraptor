@@ -9,7 +9,7 @@ import { supabase } from "@/app/lib/supabase";
 
 const Exercise = dynamic(() => import('./exercise'), { ssr: false });
 
-interface ExerciseProps {
+interface ExercisesProps {
     id: number,
     created_at: string,
     bpm: number,
@@ -20,11 +20,11 @@ interface ExerciseProps {
 }
 
 interface ExercisesContainerProps {
-    exercises: ExerciseProps[];
+    exercises: ExercisesProps[];
 }
 
 export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
-    const [copyExercises, setCopyExercises] = useState<ExerciseProps[]>([...exercises]);
+    const [copyExercises, setCopyExercises] = useState<ExercisesProps[]>([...exercises]);
     const getExercisesPos = (id: UniqueIdentifier | undefined) => copyExercises.findIndex((exercise) => exercise.id === id);
 
     const handleDragEnd = async (event: DragEndEvent) => {
@@ -66,6 +66,47 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
         });
     };
 
+    async function handleDelete(id: number) {
+        const { error } = await supabase
+            .from('exercises')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            console.error('Error deleting exercise:', error);
+            return
+        } else {
+            setCopyExercises((prevExercises) => {
+                return prevExercises.filter(exercise => exercise.id !== id)
+            });
+        }
+    };
+
+    async function handleDuplicate(id: number) {
+        const duplicatedExercise = copyExercises.find(exercise => exercise.id === id)
+
+        if (!duplicatedExercise) {
+            console.error('Duplicated exercise not found!');
+            return;
+        }
+
+        const { data, error } = await supabase
+            .from('exercises')
+            .insert({ bpm: duplicatedExercise?.bpm, name: duplicatedExercise?.name, duration: duplicatedExercise?.duration, comment: duplicatedExercise?.comment })
+            .select();
+
+        if (error) {
+            console.error('Error duplicating exercise:', error);
+            return
+        } else {
+            if (data && data.length > 0) {
+                setCopyExercises((prevExercises) => {
+                    return [...prevExercises, data[0]]
+                });
+            }
+        }
+    }
+
     const touchSensor = useSensor(TouchSensor, {
         activationConstraint: {
             delay: 250,
@@ -92,6 +133,8 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
                                     bpm={item.bpm}
                                     duration={item.duration}
                                     id={item.id}
+                                    handleDelete={handleDelete}
+                                    handleDuplicate={handleDuplicate}
                                 />
                             </div>
                         </li>
