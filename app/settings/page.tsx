@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default async function Settings() {
 
   return (
@@ -45,7 +47,7 @@ export default async function Settings() {
           <div className="stat-figure text-secondary">
             <div className="avatar online">
               <div className="w-16 rounded-full">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+              <Image src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="" />
               </div>
             </div>
           </div>
