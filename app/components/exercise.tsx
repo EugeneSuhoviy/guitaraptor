@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CountdownTimer from './countdown-timer';
 import { useWakeLock } from 'react-screen-wake-lock';
 import { useStore } from '@/app/store/exercise';
@@ -60,8 +60,20 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
 
     function handleDropdownClick() {
         ref.current?.removeAttribute('open');
-
     }
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (ref.current && !ref.current.contains(event.target as Node)) {
+                ref.current?.removeAttribute('open');
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return <>
         <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>

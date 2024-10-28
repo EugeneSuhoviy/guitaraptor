@@ -7,7 +7,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <main className="p-5">
+      <main className="p-5 max-w-3xl mx-auto">
         {data ? <EditForm data={data} /> : <p>No exercise data available.</p>}
         <DeleteForm id={Number(params.id)} />
       </main>
