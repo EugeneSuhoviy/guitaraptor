@@ -6,11 +6,11 @@ import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/16/solid'
 
 export default function LogoutBtn() {
     const supabase = createClient();
-    const router = useRouter()
+    const router = useRouter();
 
     async function handleLogout() {
-        await supabase.auth.signOut()
-        router.refresh()
+        await supabase.auth.signOut();
+        router.replace('/login');
     }
 
     return (
