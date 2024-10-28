@@ -8,7 +8,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
   return (
     <>
       <main className="p-5">
-        <EditForm data={data} />
+        {data ? <EditForm data={data} /> : <p>No exercise data available.</p>}
         <DeleteForm id={Number(params.id)} />
       </main>
     </>

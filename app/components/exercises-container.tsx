@@ -91,14 +91,19 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
             return;
         }
 
+        if (!duplicatedExercise.user_id) {
+            console.error('User ID is required for duplication.');
+            return;
+        }
+
         const { data, error } = await supabase
             .from('exercises')
             .insert({
-                bpm: duplicatedExercise?.bpm,
-                name: duplicatedExercise?.name,
-                duration: duplicatedExercise?.duration,
-                comment: duplicatedExercise?.comment,
-                user_id: duplicatedExercise?.user_id
+                bpm: duplicatedExercise.bpm as number,
+                name: duplicatedExercise.name as string,
+                duration: duplicatedExercise.duration as number,
+                comment: duplicatedExercise.comment as string,
+                user_id: duplicatedExercise.user_id
 
             })
             .select();
@@ -109,7 +114,7 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
         } else {
             if (data && data.length > 0) {
                 setCopyExercises((prevExercises) => {
-                    return [...prevExercises, data[0]]
+                    return [...prevExercises, data[0] as ExercisesProps]
                 });
             }
         }
