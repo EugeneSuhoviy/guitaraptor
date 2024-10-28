@@ -65,7 +65,6 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
 
     return <>
         <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
-            {id}
             <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
                 {isStarted ? 'Stop' : 'Start'}
             </button>
