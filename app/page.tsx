@@ -1,4 +1,3 @@
-
 import Link from 'next/link'
 import { getAllExercises } from "@/app/lib/actions";
 import ExercisesContainer from "./components/exercises-container";

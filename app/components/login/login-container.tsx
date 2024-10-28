@@ -2,11 +2,9 @@
 
 import { createClient } from "@/app/lib/supabase/client"
 
-
 export default function LoginContainer() {
     const supabase = createClient();
   
-
     function handleLogin() {
         // TODO move http://localhost:3000/auth/callback to config
         supabase.auth.signInWithOAuth({
@@ -16,8 +14,6 @@ export default function LoginContainer() {
             }
         })
     }
-
-    
 
     return (
         <>

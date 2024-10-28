@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/app/lib/supabase/server'
 import { redirect } from 'next/navigation';
+import { Database } from './database.types';
 interface Exercise {
     id: number,
     created_at: string,
@@ -66,18 +67,21 @@ export async function createExercise(formData: FormData) {
     }
 
     const { name, duration, bpm, comment } = {
-        name: formData.get('name'),
-        duration: formData.get('duration'),
-        bpm: formData.get('bpm'),
-        comment: formData.get('comment'),
+        name: formData.get('name') as string | null,
+        duration: formData.get('duration') as string | null,
+        bpm: formData.get('bpm') as string | null,
+        comment: formData.get('comment') as string | null,
     };
+
+    const bpmNumber = bpm ? Number(bpm) : null;
+    const durationNumber = duration ? Number(duration) : null;
 
     const { data, error } = await supabase
         .from('exercises')
         .insert({
-            bpm: bpm,
+            bpm: bpmNumber,
             name: name,
-            duration: duration,
+            duration: durationNumber,
             comment: comment,
             user_id: session.user.id
         });
@@ -126,13 +130,18 @@ export async function updateExercise(id: number, formData: FormData) {
         comment: formData.get('comment'),
     };
 
+    const bpmNumber = bpm !== null ? Number(bpm) : null;
+    const durationNumber = duration !== null ? Number(duration) : null;
+    const nameString = typeof name === 'string' ? name : null;
+    const commentString = typeof comment === 'string' ? comment : null;
+
     const { data, error } = await supabase
         .from('exercises')
         .update({
-            bpm: bpm,
-            name: name,
-            duration: duration,
-            comment: comment,
+            bpm: bpmNumber,
+            name: nameString,
+            duration: durationNumber,
+            comment: commentString,
         })
         .eq('id', id)
         .eq('user_id', session.user.id);

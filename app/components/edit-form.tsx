@@ -3,12 +3,14 @@ import BpmRange from "./ui/bpm-range";
 import LoadingBtn from "./loading-btn";
 
 interface Exercise {
-    id: number,
-    created_at: string,
-    bpm: number,
-    name: string,
-    duration: number,
-    comment: string
+    bpm: number | null;
+    comment: string | null;
+    created_at: string;
+    duration: number | null;
+    id: number;
+    name: string | null;
+    order: number;
+    user_id: string;
 }
 
 export default async function EditForm({ data }: { data: Exercise }) {
@@ -22,13 +24,13 @@ export default async function EditForm({ data }: { data: Exercise }) {
                         <label htmlFor="amount" className="sr-only">
                             Choose an amount
                         </label>
-                        <input type="text" placeholder="Name" name="name" className="input input-bordered w-full mb-5" defaultValue={data.name} />
+                        <input type="text" placeholder="Name" name="name" className="input input-bordered w-full mb-5" defaultValue={data.name ?? ''} />
 
-                        <input type="number" placeholder="Minutes" name="duration" className="input input-bordered w-full mb-5" defaultValue={data.duration} />
+                        <input type="number" placeholder="Minutes" name="duration" className="input input-bordered w-full mb-5" defaultValue={data.duration ?? ''} />
 
-                        <BpmRange defaultBpm={data.bpm} />
+                        <BpmRange defaultBpm={data.bpm ?? 0} />
 
-                        <textarea className="textarea textarea-bordered w-full mb-5" name="comment" placeholder="Comment" defaultValue={data.comment}></textarea>
+                        <textarea className="textarea textarea-bordered w-full mb-5" name="comment" placeholder="Comment" defaultValue={data.comment ?? ''}></textarea>
 
 
                         <LoadingBtn name={'Save'} loadingPlaceholder={'Saving'} className="btn btn-primary" />
