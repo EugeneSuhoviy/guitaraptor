@@ -1,16 +1,16 @@
 'use client'
 
 import { createClient } from "@/app/lib/supabase/client"
+import { baseUrl } from "@/app/config";
 
 export default function LoginContainer() {
     const supabase = createClient();
-  
+
     function handleLogin() {
-        // TODO move http://localhost:3000/auth/callback to config
         supabase.auth.signInWithOAuth({
             provider: 'github',
             options: {
-                redirectTo: 'http://localhost:3000/auth/callback'
+                redirectTo: `${baseUrl}/auth/callback`
             }
         })
     }
@@ -39,7 +39,7 @@ export default function LoginContainer() {
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" placeholder="password" className="input input-bordered" required disabled/>
+                                <input type="password" placeholder="password" className="input input-bordered" required disabled />
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
