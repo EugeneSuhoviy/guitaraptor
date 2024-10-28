@@ -1,5 +1,5 @@
 export default function Loading() {
-  return <main className="p-3 animate-pulse">
+  return <main className="p-3 animate-pulse max-w-3xl mx-auto">
     <div>
       <div className="mb-1 w-full flex items-center p-5">
         <div className="h-10 w-20 bg-gray-200 rounded mr-5"></div>
