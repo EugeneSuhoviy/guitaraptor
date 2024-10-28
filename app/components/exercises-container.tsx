@@ -5,10 +5,10 @@ import { useState } from "react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import dynamic from "next/dynamic";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { supabase } from "@/app/lib/supabase";
+import { createClient } from "@/app/lib/supabase/client";
 
 const Exercise = dynamic(() => import('./exercise'), { ssr: false });
-
+const supabase = createClient();
 interface ExercisesProps {
     id: number,
     created_at: string,
@@ -16,7 +16,8 @@ interface ExercisesProps {
     name: string,
     duration: number,
     comment: string,
-    order: number
+    order: number,
+    user_id?: string
 }
 
 interface ExercisesContainerProps {
@@ -92,7 +93,14 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
 
         const { data, error } = await supabase
             .from('exercises')
-            .insert({ bpm: duplicatedExercise?.bpm, name: duplicatedExercise?.name, duration: duplicatedExercise?.duration, comment: duplicatedExercise?.comment })
+            .insert({
+                bpm: duplicatedExercise?.bpm,
+                name: duplicatedExercise?.name,
+                duration: duplicatedExercise?.duration,
+                comment: duplicatedExercise?.comment,
+                user_id: duplicatedExercise?.user_id
+
+            })
             .select();
 
         if (error) {
