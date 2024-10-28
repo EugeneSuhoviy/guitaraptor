@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { getAllExercises } from "@/app/lib/actions";
 import ExercisesContainer from "./components/exercises-container";
 import LogoutBtn from './components/login/logout-btn';
@@ -10,7 +9,6 @@ export default async function Home() {
     <>
       <main className="p-5">
         <ExercisesContainer exercises={exercises} />
-        <Link role="button" className="btn my-4" href="/exercise/create">Add exercise</Link>
         <LogoutBtn />
       </main>
     </>

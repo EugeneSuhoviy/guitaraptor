@@ -6,6 +6,7 @@ import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-ki
 import dynamic from "next/dynamic";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { createClient } from "@/app/lib/supabase/client";
+import Link from 'next/link'
 
 const Exercise = dynamic(() => import('./exercise'), { ssr: false });
 const supabase = createClient();
@@ -135,25 +136,28 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
     );
 
     return <>
-        <ul className="exercises">
-            <DndContext sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
-                <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>
-                    {copyExercises?.map((item, index) => {
-                        return <li key={index} className="bg-base-300 rounded-xl mb-2">
-                            <div className="bg-base-200 rounded-xl">
-                                <Exercise
-                                    name={item.name}
-                                    bpm={item.bpm}
-                                    duration={item.duration}
-                                    id={item.id}
-                                    handleDelete={handleDelete}
-                                    handleDuplicate={handleDuplicate}
-                                />
-                            </div>
-                        </li>
-                    })}
-                </SortableContext>
-            </DndContext>
-        </ul>
+        <div className="max-w-3xl mx-auto">
+            <ul className="exercises">
+                <DndContext sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
+                    <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>
+                        {copyExercises?.map((item, index) => {
+                            return <li key={index} className="bg-base-300 rounded-xl mb-2">
+                                <div className="bg-base-200 rounded-xl">
+                                    <Exercise
+                                        name={item.name}
+                                        bpm={item.bpm}
+                                        duration={item.duration}
+                                        id={item.id}
+                                        handleDelete={handleDelete}
+                                        handleDuplicate={handleDuplicate}
+                                    />
+                                </div>
+                            </li>
+                        })}
+                    </SortableContext>
+                </DndContext>
+            </ul>
+            <Link role="button" className="btn my-4" href="/exercise/create">Add exercise</Link>
+        </div>
     </>
 }
