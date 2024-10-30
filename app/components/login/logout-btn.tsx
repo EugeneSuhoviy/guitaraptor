@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client"
 import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/16/solid'
 
-const LogoutBtn: React.FC = () => {
+const LogoutBtn: React.FC<{ classes: string }> = ({ classes }) => {
     const supabase = createClient();
     const router = useRouter();
 
@@ -14,7 +14,7 @@ const LogoutBtn: React.FC = () => {
     }
 
     return (
-        <div className="form-control mt-6">
+        <div className={`form-control mt-6 ${classes}`}>
             <button className="btn btn-primary" onClick={handleLogout}>
                 <ArrowLeftStartOnRectangleIcon className="size-4" />
                 Logout
