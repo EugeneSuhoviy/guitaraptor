@@ -32,7 +32,6 @@ export default async function EditForm({ data }: { data: Exercise }) {
 
                         <textarea className="textarea textarea-bordered w-full mb-5" name="comment" placeholder="Comment" defaultValue={data.comment ?? ''}></textarea>
 
-
                         <LoadingBtn name={'Save'} loadingPlaceholder={'Saving'} className="btn btn-primary" />
                     </div>
                 </div>

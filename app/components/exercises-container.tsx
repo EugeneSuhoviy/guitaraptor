@@ -101,7 +101,7 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
             .from('exercises')
             .insert({
                 bpm: duplicatedExercise.bpm as number,
-                name: duplicatedExercise.name as string,
+                name: duplicatedExercise.name + ' copy' as string,
                 duration: duplicatedExercise.duration as number,
                 comment: duplicatedExercise.comment as string,
                 user_id: duplicatedExercise.user_id

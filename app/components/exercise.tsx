@@ -7,8 +7,11 @@ import { useWakeLock } from 'react-screen-wake-lock';
 import { useStore } from '@/app/store/exercise';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Bars2Icon as Bars2IconOutline } from '@heroicons/react/24/outline'
-import { Bars2Icon as Bars2IconSolid, PencilSquareIcon, TrashIcon, DocumentDuplicateIcon } from '@heroicons/react/16/solid'
+import { Bars2Icon as Bars2IconOutline } from '@heroicons/react/24/outline';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Bars2Icon as Bars2IconSolid, PencilSquareIcon, TrashIcon, DocumentDuplicateIcon } from '@heroicons/react/16/solid';
+import { PlayIcon } from '@heroicons/react/24/solid'
+import { PauseIcon } from '@heroicons/react/24/solid'
 
 interface ExerciseProps {
     id: number,
@@ -78,14 +81,14 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
     return <>
         <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
             <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
-                {isStarted ? 'Stop' : 'Start'}
+                {isStarted ? <PauseIcon className="size-4" /> : <PlayIcon className="size-4" />}
             </button>
             <div className="flex items-left flex-col mr-auto">
                 {!isStarted && (
                     <>
-                        <div>name: {name}</div>
-                        <div>bpm: {bpm}</div>
-                        <div>time: {duration}</div>
+                        <div>{name}</div>
+                        <div>{bpm} BPM</div>
+                        <div>{duration} min</div>
                     </>
                 )}
                 {isStarted && (
@@ -131,12 +134,12 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
                                     Duplicate
                                 </a>
                             </li>
-                            <li>
+                            {/* <li>
                                 <a>
                                     <Bars2IconSolid className="size-4" />
                                     Reorder
                                 </a>
-                            </li>
+                            </li> */}
                         </ul>
                     </details>
                     <button {...attributes} {...listeners} className="cursor-move touch-none" type="button">
