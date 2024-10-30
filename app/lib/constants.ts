@@ -1,4 +1,4 @@
 export const THEME_TYPES = {
-    THEME_DARK: 'night',
-    THEME_LIGHT: 'cupcake'
+    THEME_DARK: 'business',
+    THEME_LIGHT: 'pastel'
 };
