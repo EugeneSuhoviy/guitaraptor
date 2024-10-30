@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client"
 import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/16/solid'
 
-export default function LogoutBtn() {
+const LogoutBtn: React.FC = () => {
     const supabase = createClient();
     const router = useRouter();
 
@@ -22,3 +22,5 @@ export default function LogoutBtn() {
         </div>
     )
 }
+
+export default LogoutBtn;

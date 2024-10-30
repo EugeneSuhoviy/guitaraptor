@@ -3,7 +3,7 @@
 import { createClient } from "@/app/lib/supabase/client"
 import { baseUrl } from "@/app/config";
 
-export default function LoginContainer() {
+const LoginContainer: React.FC = () => {
     const supabase = createClient();
 
     function handleLogin() {
@@ -45,7 +45,7 @@ export default function LoginContainer() {
                                 </label>
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary" onClick={handleLogin}>Login <i>(temporary doesn&apos;t work)</i></button>
+                                <button disabled className="btn btn-primary" onClick={handleLogin}>Login <i>(temporary doesn&apos;t work)</i></button>
                             </div>
 
                             <div className="divider">OR</div>
@@ -62,3 +62,5 @@ export default function LoginContainer() {
         </>
     )
 }
+
+export default LoginContainer;
