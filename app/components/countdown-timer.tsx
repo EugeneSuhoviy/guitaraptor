@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function CountdownTimer({ initialTime }: { initialTime: number }) {
+const CountdownTimer: React.FC<{ initialTime: number }> = ({ initialTime }) => {
     const time = initialTime * 60;
     const [timeRemaining, setTimeRemaining] = useState(time);
     const ref = useRef<HTMLDialogElement>(null);
@@ -55,3 +55,5 @@ export default function CountdownTimer({ initialTime }: { initialTime: number })
         </>
     );
 };
+
+export default CountdownTimer;
