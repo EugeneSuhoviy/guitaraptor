@@ -5,29 +5,38 @@ import React, { useState, useEffect, useRef } from 'react';
 const CountdownTimer: React.FC<{ initialTime: number }> = ({ initialTime }) => {
     const time = initialTime * 60;
     const [timeRemaining, setTimeRemaining] = useState(time);
+    const [isPaused, setIsPaused] = useState(false);
     const ref = useRef<HTMLDialogElement>(null);
+
+    function onPause() {
+        setIsPaused((prevState) => {
+            return !prevState
+        });
+    }
 
     useEffect(() => {
         const timerInterval = setInterval(() => {
-            setTimeRemaining((prevTime) => {
-                if (prevTime === 0) {
-                    clearInterval(timerInterval);
+            if (!isPaused) {
+                setTimeRemaining((prevTime) => {
+                    if (prevTime === 0) {
+                        clearInterval(timerInterval);
 
-                    if (ref.current) {
-                        ref.current.showModal();
+                        if (ref.current) {
+                            ref.current.showModal();
+                        }
+
+                        return 0;
+                    } else {
+                        return prevTime - 1;
                     }
-
-                    return 0;
-                } else {
-                    return prevTime - 1;
-                }
-            });
+                });
+            }
         }, 1000);
 
         return () => {
             clearInterval(timerInterval)
         };
-    }, []);
+    }, [isPaused]);
 
     // const hours = Math.floor(timeRemaining / 3600);
     const minutes = Math.floor((timeRemaining % 3600) / 60);
@@ -36,7 +45,7 @@ const CountdownTimer: React.FC<{ initialTime: number }> = ({ initialTime }) => {
     return (
         <>
             <div>
-                <span className="countdown font-mono text-6xl rounded-xl bg-accent p-1">
+                <span className={`countdown font-mono text-6xl rounded-xl p-1 hover:cursor-pointer hover:opacity-60 ${isPaused ? 'bg-secondary' : 'bg-accent'}`} onClick={onPause}>
                     <span style={{ ['--value' as string]: minutes }}></span>:
                     <span style={{ ['--value' as string]: seconds }}></span>
                 </span>
