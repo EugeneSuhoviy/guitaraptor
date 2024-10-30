@@ -1,4 +1,5 @@
 import { useTheme, useSetTheme } from '@/app/store/theme';
+import { THEME_TYPES } from '@/app/lib/constants';
 
 const ThemeToggle: React.FC = () => {
     const theme = useTheme();
@@ -6,7 +7,10 @@ const ThemeToggle: React.FC = () => {
 
     return (
         <label className="swap swap-rotate">
-            <input type="checkbox" className="theme-controller" onChange={(event) => { setTheme(event.currentTarget.value) }} value="night" checked={theme === 'night'} />
+            <input type="checkbox"
+                className="theme-controller"
+                onChange={(event) => { setTheme(event.currentTarget.value) }} value={THEME_TYPES.THEME_DARK} checked={theme === THEME_TYPES.THEME_DARK}
+            />
             <svg
                 className="swap-on h-10 w-10 fill-current"
                 xmlns="http://www.w3.org/2000/svg"

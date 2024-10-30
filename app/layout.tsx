@@ -1,6 +1,6 @@
-
 import type { Metadata } from "next";
 import './globals.css';
+import { THEME_TYPES } from '@/app/lib/constants';
 import Header from "./components/header";
 
 export const metadata: Metadata = {
@@ -14,10 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="cupcake">
+    <html lang="en" data-theme={THEME_TYPES.THEME_LIGHT}>
       <body>
-          <Header />
-          {children}
+        <Header />
+        {children}
       </body>
     </html>
   );
