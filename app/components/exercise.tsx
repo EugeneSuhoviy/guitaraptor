@@ -86,9 +86,9 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
             <div className="flex items-left flex-col mr-auto">
                 {!isStarted && (
                     <>
-                        <div>{name}</div>
-                        <div>{bpm} BPM</div>
-                        <div>{duration} min</div>
+                        <div className="text-lg font-bold">{name}</div>
+                        <div><span className="font-semibold">{bpm}</span> BPM</div>
+                        <div><span className="font-semibold">{duration}</span> min</div>
                     </>
                 )}
                 {isStarted && (

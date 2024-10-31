@@ -45,7 +45,7 @@ const CountdownTimer: React.FC<{ initialTime: number }> = ({ initialTime }) => {
     return (
         <>
             <div>
-                <span className={`countdown font-mono text-6xl rounded-xl p-1 hover:cursor-pointer hover:opacity-60 ${isPaused ? 'bg-secondary' : 'bg-accent'}`} onClick={onPause}>
+                <span className={`countdown font-mono text-6xl rounded-xl p-1 hover:cursor-pointer md:hover:opacity-60 ${isPaused ? 'bg-secondary' : 'bg-accent'}`} onClick={onPause}>
                     <span style={{ ['--value' as string]: minutes }}></span>:
                     <span style={{ ['--value' as string]: seconds }}></span>
                 </span>

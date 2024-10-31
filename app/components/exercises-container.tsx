@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { createClient } from "@/app/lib/supabase/client";
 import Link from 'next/link'
+import { PlusIcon } from '@heroicons/react/24/solid'
 
 const Exercise = dynamic(() => import('./exercise'), { ssr: false });
 const supabase = createClient();
@@ -157,7 +158,9 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
                     </SortableContext>
                 </DndContext>
             </ul>
-            <Link role="button" className="btn my-4" href="/exercise/create">Add exercise</Link>
+            <div className="flex justify-end mt-5">
+                <Link role="button" className="btn btn-secondary" href="/exercise/create"><PlusIcon className="size-4" /></Link>
+            </div>
         </div>
     </>
 }
