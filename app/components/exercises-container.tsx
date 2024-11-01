@@ -1,7 +1,7 @@
 'use client';
 
 import { closestCorners, DndContext, DragEndEvent, PointerSensor, TouchSensor, UniqueIdentifier, useSensor, useSensors } from "@dnd-kit/core";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import dynamic from "next/dynamic";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
@@ -69,21 +69,35 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
         });
     };
 
-    async function handleDelete(id: number) {
+    const refModalDelete = useRef<HTMLDialogElement>(null);
+
+    const [deleteId, setDeleteId] = useState(0);
+
+    function handleDelete(id: number) {
+        if (refModalDelete.current) {
+            refModalDelete.current.showModal();
+        }
+
+        setDeleteId(id);
+    };
+
+    async function onDelete() {
         const { error } = await supabase
             .from('exercises')
             .delete()
-            .eq('id', id);
+            .eq('id', deleteId);
 
         if (error) {
             console.error('Error deleting exercise:', error);
             return
         } else {
             setCopyExercises((prevExercises) => {
-                return prevExercises.filter(exercise => exercise.id !== id)
+                return prevExercises.filter(exercise => exercise.id !== deleteId)
             });
+
+            setDeleteId(0);
         }
-    };
+    }
 
     async function handleDuplicate(id: number) {
         const duplicatedExercise = copyExercises.find(exercise => exercise.id === id)
@@ -158,6 +172,18 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
                     </SortableContext>
                 </DndContext>
             </ul>
+            <dialog id="my_modal_1" className="modal modal-bottom sm:modal-middle" ref={refModalDelete}>
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Delete exercise?</h3>
+                    {/* <p className="py-4">Press ESC key or click the button below to close</p> */}
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button className="btn btn-secondary mr-4" onClick={onDelete}>YES</button>
+                            <button className="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
             <div className="flex justify-end mt-5">
                 <Link role="button" className="btn btn-secondary" href="/exercise/create"><PlusIcon className="size-4" /></Link>
             </div>

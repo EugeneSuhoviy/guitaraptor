@@ -145,8 +145,6 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
                     <button {...attributes} {...listeners} className="cursor-move touch-none" type="button">
                         <Bars2IconOutline className="size-6 ml-2" />
                     </button>
-                    {/* {runningExerciseId}
-                    <pre>{runningExerciseId! ? '+' : '-'}</pre> */}
                 </>
             )}
         </div>
