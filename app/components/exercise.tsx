@@ -11,7 +11,7 @@ import { Bars2Icon as Bars2IconOutline } from '@heroicons/react/24/outline';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Bars2Icon as Bars2IconSolid, PencilSquareIcon, TrashIcon, DocumentDuplicateIcon } from '@heroicons/react/16/solid';
 import { PlayIcon } from '@heroicons/react/24/solid'
-import { PauseIcon } from '@heroicons/react/24/solid'
+import { StopIcon } from '@heroicons/react/24/solid'
 
 interface ExerciseProps {
     id: number,
@@ -81,12 +81,12 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
     return <>
         <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
             <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
-                {isStarted ? <PauseIcon className="size-4" /> : <PlayIcon className="size-4" />}
+                {isStarted ? <StopIcon className="size-4" /> : <PlayIcon className="size-4" />}
             </button>
             <div className="flex items-left flex-col mr-auto">
                 {!isStarted && (
                     <>
-                        <div className="text-lg font-bold">{name}</div>
+                        <div className="text-lg font-semibold">{name}</div>
                         <div><span className="font-semibold">{bpm}</span> BPM</div>
                         <div><span className="font-semibold">{duration}</span> min</div>
                     </>
@@ -123,15 +123,15 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
                                 </Link>
                             </li>
                             <li>
-                                <a onClick={() => { handleDelete(id) }}>
-                                    <TrashIcon className="size-4" />
-                                    Delete
-                                </a>
-                            </li>
-                            <li>
                                 <a onClick={() => { handleDuplicate(id) }}>
                                     <DocumentDuplicateIcon className="size-4" />
                                     Duplicate
+                                </a>
+                            </li>
+                            <li>
+                                <a onClick={() => { handleDelete(id) }}>
+                                    <TrashIcon className="size-4" />
+                                    Delete
                                 </a>
                             </li>
                             {/* <li>
@@ -145,6 +145,8 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
                     <button {...attributes} {...listeners} className="cursor-move touch-none" type="button">
                         <Bars2IconOutline className="size-6 ml-2" />
                     </button>
+                    {/* {runningExerciseId}
+                    <pre>{runningExerciseId! ? '+' : '-'}</pre> */}
                 </>
             )}
         </div>

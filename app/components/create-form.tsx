@@ -18,7 +18,7 @@ export default async function CreateForm() {
 
                     <textarea className="textarea textarea-bordered w-full mb-5" name="comment" placeholder="Comment"></textarea>
 
-                    <LoadingBtn name={'Save'} loadingPlaceholder={'Saving'} className={'btn btn-primary'}/>
+                    <LoadingBtn name={'Save'} loadingPlaceholder={'Saving'} className={'btn btn-secondary'}/>
                 </div>
             </div>
         </div>
