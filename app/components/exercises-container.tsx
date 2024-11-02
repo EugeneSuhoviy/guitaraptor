@@ -1,7 +1,7 @@
 'use client';
 
 import { closestCorners, DndContext, DragEndEvent, PointerSensor, TouchSensor, UniqueIdentifier, useSensor, useSensors } from "@dnd-kit/core";
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { createClient } from "@/app/lib/supabase/client";
@@ -28,6 +28,7 @@ interface ExercisesContainerProps {
 export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
     const [copyExercises, setCopyExercises] = useState<ExercisesProps[]>([...exercises]);
     const getExercisesPos = (id: UniqueIdentifier | undefined) => copyExercises.findIndex((exercise) => exercise.id === id);
+    const id = useId();
 
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
@@ -152,7 +153,7 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
     return <>
         <div className="max-w-3xl mx-auto">
             <ul className="exercises">
-                <DndContext  id="unique-dnd-context-id" sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
+                <DndContext id={id} sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
                     <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>
                         {copyExercises?.map((item, index) => {
                             return <li key={index} className="bg-base-300 rounded-xl mb-2">
