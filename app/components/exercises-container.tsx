@@ -30,6 +30,8 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
     const getExercisesPos = (id: UniqueIdentifier | undefined) => copyExercises.findIndex((exercise) => exercise.id === id);
     const id = useId();
 
+    
+
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
 

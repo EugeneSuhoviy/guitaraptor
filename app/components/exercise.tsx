@@ -38,17 +38,24 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
 
     const { request, release } = useWakeLock();
     const [isStarted, setIsStarted] = useState(false);
-
     const ref = useRef<HTMLDetailsElement>(null);
-
     const runningExerciseId = useStore((state) => state.runningExerciseId)
+    const setRunningExerciseId = useStore((state) => state.setRunningExerciseId);
 
-    if (isStarted && runningExerciseId !== id) {
-        setIsStarted(false)
-    }
+    useEffect(() => {
+        if (isStarted && runningExerciseId !== id) {
+            setIsStarted(false)
+        }
+    }, [id, isStarted, runningExerciseId]);
+
+    useEffect(() => {
+        if (!isStarted) {
+            setRunningExerciseId(null)
+        }
+    }, [isStarted, setRunningExerciseId]);
 
     function handleClick() {
-        useStore.setState({ runningExerciseId: id });
+        setRunningExerciseId(id)
 
         setIsStarted((prevState) => {
             if (prevState) {
@@ -99,7 +106,8 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
                 )}
             </div>
             {isStarted && <CountdownTimer initialTime={duration} />}
-            {!isStarted && (
+
+            {!runningExerciseId && (
                 <>
                     <details className="dropdown dropdown-bottom dropdown-end" ref={ref}>
                         <summary className="btn m-1">
