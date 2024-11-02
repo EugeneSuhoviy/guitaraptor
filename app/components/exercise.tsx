@@ -29,9 +29,11 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
         setNodeRef,
         transform,
         transition,
-    } = useSortable({ id: id, transition: null });
+        isDragging
+    } = useSortable({ id: id });
 
     const style = {
+        opacity: isDragging ? 0.4 : undefined,
         transition,
         transform: CSS.Transform.toString(transform)
     };
@@ -86,75 +88,79 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
     }, []);
 
     return <>
-        <div className="mb-1 w-full flex items-center p-5" ref={setNodeRef} style={style}>
-            <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
-                {isStarted ? <StopIcon className="size-4" /> : <PlayIcon className="size-4" />}
-            </button>
-            <div className="flex items-left flex-col mr-auto">
-                {!isStarted && (
-                    <>
-                        <div className="text-lg font-semibold">{name}</div>
-                        <div><span className="font-semibold">{bpm}</span> BPM</div>
-                        <div><span className="font-semibold">{duration}</span> min</div>
-                    </>
-                )}
-                {isStarted && (
-                    <div className='flex flex-col'>
-                        <span className='text-xl font-bold'>{bpm}</span>
-                        <span>BPM</span>
+        <li className="bg-base-300 rounded-xl mb-2" ref={setNodeRef} style={style}>
+            <div className="bg-base-200 rounded-xl">
+                <div className="mb-1 w-full flex items-center p-5" >
+                    <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
+                        {isStarted ? <StopIcon className="size-4" /> : <PlayIcon className="size-4" />}
+                    </button>
+                    <div className="flex items-left flex-col mr-auto">
+                        {!isStarted && (
+                            <>
+                                <div className="text-lg font-semibold">{name}</div>
+                                <div><span className="font-semibold">{bpm}</span> BPM</div>
+                                <div><span className="font-semibold">{duration}</span> min</div>
+                            </>
+                        )}
+                        {isStarted && (
+                            <div className='flex flex-col'>
+                                <span className='text-xl font-bold'>{bpm}</span>
+                                <span>BPM</span>
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
-            {isStarted && <CountdownTimer initialTime={duration} />}
+                    {isStarted && <CountdownTimer initialTime={duration} />}
 
-            {!runningExerciseId && (
-                <>
-                    <details className="dropdown dropdown-bottom dropdown-end" ref={ref}>
-                        <summary className="btn m-1">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                className="inline-block h-5 w-5 stroke-current">
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                            </svg>
-                        </summary>
-                        <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow" onClick={handleDropdownClick}>
-                            <li>
-                                <Link href={`/exercise/edit/${id}`}>
-                                    <PencilSquareIcon className="size-4" />
-                                    Edit
-                                </Link>
-                            </li>
-                            <li>
-                                <a onClick={() => { handleDuplicate(id) }}>
-                                    <DocumentDuplicateIcon className="size-4" />
-                                    Duplicate
-                                </a>
-                            </li>
-                            <li>
-                                <a onClick={() => { handleDelete(id) }}>
-                                    <TrashIcon className="size-4" />
-                                    Delete
-                                </a>
-                            </li>
-                            {/* <li>
+                    {!runningExerciseId && (
+                        <>
+                            <details className="dropdown dropdown-bottom dropdown-end" ref={ref}>
+                                <summary className="btn m-1">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        className="inline-block h-5 w-5 stroke-current">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </summary>
+                                <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow" onClick={handleDropdownClick}>
+                                    <li>
+                                        <Link href={`/exercise/edit/${id}`}>
+                                            <PencilSquareIcon className="size-4" />
+                                            Edit
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <a onClick={() => { handleDuplicate(id) }}>
+                                            <DocumentDuplicateIcon className="size-4" />
+                                            Duplicate
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a onClick={() => { handleDelete(id) }}>
+                                            <TrashIcon className="size-4" />
+                                            Delete
+                                        </a>
+                                    </li>
+                                    {/* <li>
                                 <a>
                                     <Bars2IconSolid className="size-4" />
                                     Reorder
                                 </a>
                             </li> */}
-                        </ul>
-                    </details>
-                    <button {...attributes} {...listeners} className="cursor-move touch-none" type="button">
-                        <Bars2IconOutline className="size-6 ml-2" />
-                    </button>
-                </>
-            )}
-        </div>
+                                </ul>
+                            </details>
+                            <button {...attributes} {...listeners} className="cursor-move touch-none" type="button">
+                                <Bars2IconOutline className="size-6 ml-2" />
+                            </button>
+                        </>
+                    )}
+                </div>
+            </div>
+        </li>
     </>
 }

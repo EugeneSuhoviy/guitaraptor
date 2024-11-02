@@ -30,8 +30,6 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
     const getExercisesPos = (id: UniqueIdentifier | undefined) => copyExercises.findIndex((exercise) => exercise.id === id);
     const id = useId();
 
-    
-
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
 
@@ -154,26 +152,26 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
 
     return <>
         <div className="max-w-3xl mx-auto">
-            <ul className="exercises">
-                <DndContext id={id} sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
-                    <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>
-                        {copyExercises?.map((item, index) => {
-                            return <li key={index} className="bg-base-300 rounded-xl mb-2">
-                                <div className="bg-base-200 rounded-xl">
-                                    <Exercise
-                                        name={item.name}
-                                        bpm={item.bpm}
-                                        duration={item.duration}
-                                        id={item.id}
-                                        handleDelete={handleDelete}
-                                        handleDuplicate={handleDuplicate}
-                                    />
-                                </div>
-                            </li>
+            <hr />
+
+            <hr />
+            <DndContext id={id} sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
+                <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>
+                    <ul className="exercises">
+                        {copyExercises?.map((item) => {
+                            return <Exercise
+                                key={item.id}
+                                name={item.name}
+                                bpm={item.bpm}
+                                duration={item.duration}
+                                id={item.id}
+                                handleDelete={handleDelete}
+                                handleDuplicate={handleDuplicate}
+                            />
                         })}
-                    </SortableContext>
-                </DndContext>
-            </ul>
+                    </ul>
+                </SortableContext>
+            </DndContext>
             <dialog id="my_modal_1" className="modal modal-bottom sm:modal-middle" ref={refModalDelete}>
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Delete exercise?</h3>
