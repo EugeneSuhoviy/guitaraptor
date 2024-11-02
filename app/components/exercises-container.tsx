@@ -152,38 +152,37 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
 
     return <>
         <div className="max-w-3xl mx-auto">
-            <hr />
-
-            <hr />
-            <DndContext id={id} sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
-                <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>
-                    <ul className="exercises">
-                        {copyExercises?.map((item) => {
-                            return <Exercise
-                                key={item.id}
-                                name={item.name}
-                                bpm={item.bpm}
-                                duration={item.duration}
-                                id={item.id}
-                                handleDelete={handleDelete}
-                                handleDuplicate={handleDuplicate}
-                            />
-                        })}
-                    </ul>
-                </SortableContext>
-            </DndContext>
-            <dialog id="my_modal_1" className="modal modal-bottom sm:modal-middle" ref={refModalDelete}>
-                <div className="modal-box">
-                    <h3 className="font-bold text-lg">Delete exercise?</h3>
-                    {/* <p className="py-4">Press ESC key or click the button below to close</p> */}
-                    <div className="modal-action">
-                        <form method="dialog">
-                            <button className="btn btn-secondary mr-4" onClick={onDelete}>YES</button>
-                            <button className="btn">Close</button>
-                        </form>
+            {copyExercises.length ? <div>
+                <DndContext id={id} sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
+                    <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>
+                        <ul className="exercises">
+                            {copyExercises?.map((item) => {
+                                return <Exercise
+                                    key={item.id}
+                                    name={item.name}
+                                    bpm={item.bpm}
+                                    duration={item.duration}
+                                    id={item.id}
+                                    handleDelete={handleDelete}
+                                    handleDuplicate={handleDuplicate}
+                                />
+                            })}
+                        </ul>
+                    </SortableContext>
+                </DndContext>
+                <dialog id="my_modal_1" className="modal modal-bottom sm:modal-middle" ref={refModalDelete}>
+                    <div className="modal-box">
+                        <h3 className="font-bold text-lg">Delete exercise?</h3>
+                        {/* <p className="py-4">Press ESC key or click the button below to close</p> */}
+                        <div className="modal-action">
+                            <form method="dialog">
+                                <button className="btn btn-secondary mr-4" onClick={onDelete}>YES</button>
+                                <button className="btn">Close</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </dialog>
+                </dialog>
+            </div> : <h2 className="text-center w-full text-xl">Hit plus button and add your first exercise 👇</h2>}
             <div className="flex justify-end mt-5">
                 <Link role="button" className="btn btn-secondary" href="/exercise/create"><PlusIcon className="size-4" /></Link>
             </div>
