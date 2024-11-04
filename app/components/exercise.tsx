@@ -57,13 +57,36 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
     }, [isStarted, setRunningExerciseId]);
 
     function handleClick() {
-        setRunningExerciseId(id)
+        if (setRunningExerciseId === null || setRunningExerciseId === undefined) {
+            console.error("setRunningExerciseId is null or undefined");
+            return;
+        }
+
+        if (request === null || request === undefined) {
+            console.error("request is null or undefined");
+            return;
+        }
+
+        if (release === null || release === undefined) {
+            console.error("release is null or undefined");
+            return;
+        }
+
+        setRunningExerciseId(id);
 
         setIsStarted((prevState) => {
             if (prevState) {
-                release();
+                try {
+                    release();
+                } catch (err) {
+                    console.error("Error releasing wake lock:", err);
+                }
             } else {
-                request();
+                try {
+                    request();
+                } catch (err) {
+                    console.error("Error requesting wake lock:", err);
+                }
             }
 
             return !prevState
@@ -75,9 +98,18 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
     }
 
     useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (ref.current && !ref.current.contains(event.target as Node)) {
-                ref.current?.removeAttribute('open');
+        /**
+         * Handle a click outside the dropdown menu.
+         *
+         * @param {MouseEvent} event - The event that triggered this function.
+         */
+        function handleClickOutside(event: MouseEvent): void {
+            if (!ref.current || !ref.current.contains(event.target as Node)) {
+                if (ref.current) {
+                    ref.current.removeAttribute('open');
+                } else {
+                    console.error("ref.current is null or undefined");
+                }
             }
         }
 
