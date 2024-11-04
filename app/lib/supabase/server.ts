@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 import { Database } from "../database.types";
 
 export async function createClient() {
-  const cookieStore = await cookies()
+  const cookieStore = cookies()
 
   return createServerClient<Database>(
     supabaseURL,
