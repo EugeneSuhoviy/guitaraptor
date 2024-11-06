@@ -107,8 +107,6 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
             if (!ref.current || !ref.current.contains(event.target as Node)) {
                 if (ref.current) {
                     ref.current.removeAttribute('open');
-                } else {
-                    console.error("ref.current is null or undefined");
                 }
             }
         }
