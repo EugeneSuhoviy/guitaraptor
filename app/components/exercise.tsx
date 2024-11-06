@@ -8,8 +8,7 @@ import { useStore } from '@/app/store/exercise';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Bars2Icon as Bars2IconOutline } from '@heroicons/react/24/outline';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Bars2Icon as Bars2IconSolid, PencilSquareIcon, TrashIcon, DocumentDuplicateIcon } from '@heroicons/react/16/solid';
+import { PencilSquareIcon, TrashIcon, DocumentDuplicateIcon } from '@heroicons/react/16/solid';
 import { PlayIcon } from '@heroicons/react/24/solid'
 import { StopIcon } from '@heroicons/react/24/solid'
 
@@ -93,16 +92,15 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
         });
     }
 
+    function handleReset() {
+        setRunningExerciseId(null);
+    }
+
     function handleDropdownClick() {
         ref.current?.removeAttribute('open');
     }
 
     useEffect(() => {
-        /**
-         * Handle a click outside the dropdown menu.
-         *
-         * @param {MouseEvent} event - The event that triggered this function.
-         */
         function handleClickOutside(event: MouseEvent): void {
             if (!ref.current || !ref.current.contains(event.target as Node)) {
                 if (ref.current) {
@@ -119,6 +117,7 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
 
     return <>
         <li className="bg-base-300 rounded-xl mb-2" ref={setNodeRef} style={style}>
+
             <div className="bg-base-200 rounded-xl">
                 <div className="mb-1 w-full flex items-center p-5" >
                     <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
@@ -139,7 +138,7 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
                             </div>
                         )}
                     </div>
-                    {isStarted && <CountdownTimer initialTime={duration} />}
+                    {isStarted && <CountdownTimer initialTime={duration} onReset={handleReset} />}
 
                     {!runningExerciseId && (
                         <>
@@ -176,12 +175,6 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
                                             Delete
                                         </a>
                                     </li>
-                                    {/* <li>
-                                <a>
-                                    <Bars2IconSolid className="size-4" />
-                                    Reorder
-                                </a>
-                            </li> */}
                                 </ul>
                             </details>
                             <button {...attributes} {...listeners} className="cursor-move touch-none" type="button">

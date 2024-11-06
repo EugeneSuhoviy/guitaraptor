@@ -25,7 +25,7 @@ interface ExercisesContainerProps {
     exercises: ExercisesProps[];
 }
 
-export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
+export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {    
     const [copyExercises, setCopyExercises] = useState<ExercisesProps[]>([...exercises]);
     const getExercisesPos = (id: UniqueIdentifier | undefined) => copyExercises.findIndex((exercise) => exercise.id === id);
     const id = useId();

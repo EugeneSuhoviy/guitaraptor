@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-const CountdownTimer: React.FC<{ initialTime: number }> = ({ initialTime }) => {
+const CountdownTimer: React.FC<{ initialTime: number, onReset: () => void }> = ({ initialTime, onReset }) => {
     const time = initialTime * 60;
     const [timeRemaining, setTimeRemaining] = useState(time);
     const [isPaused, setIsPaused] = useState(false);
@@ -36,7 +36,7 @@ const CountdownTimer: React.FC<{ initialTime: number }> = ({ initialTime }) => {
         return () => {
             clearInterval(timerInterval)
         };
-    }, [isPaused]);
+    }, [isPaused, onReset]);
 
     // const hours = Math.floor(timeRemaining / 3600);
     const minutes = Math.floor((timeRemaining % 3600) / 60);
@@ -56,7 +56,7 @@ const CountdownTimer: React.FC<{ initialTime: number }> = ({ initialTime }) => {
                     <p className="py-4">Press ESC key or click the button below to close</p>
                     <div className="modal-action">
                         <form method="dialog">
-                            <button className="btn">Close</button>
+                            <button className="btn" onClick={onReset}>Close</button>
                         </form>
                     </div>
                 </div>
