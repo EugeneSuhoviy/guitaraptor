@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { THEME_TYPES } from '@/app/lib/constants';
+import { THEME_TYPES } from '@/utils/constants';
 
 interface ThemeState {
     theme: string;

@@ -1,4 +1,4 @@
-import { updateExercise } from "@/app/lib/actions";
+import { updateExercise } from "@/utils/actions";
 import BpmRange from "./ui/bpm-range";
 import LoadingBtn from "./loading-btn";
 

@@ -4,7 +4,7 @@ import { closestCorners, DndContext, DragEndEvent, PointerSensor, TouchSensor, U
 import { useId, useRef, useState } from "react";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { createClient } from "@/app/lib/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import Link from 'next/link'
 import { PlusIcon } from '@heroicons/react/24/solid'
 import Exercise from "./exercise";

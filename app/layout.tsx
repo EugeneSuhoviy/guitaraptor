@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import './globals.css';
-import { THEME_TYPES } from '@/app/lib/constants';
-import Header from "./components/header";
+import { THEME_TYPES } from '@/utils/constants';
+import Header from "../components/header";
 
 export const metadata: Metadata = {
   title: "Guitaraptor",

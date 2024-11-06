@@ -1,5 +1,5 @@
 import { useTheme, useSetTheme } from '@/app/store/theme';
-import { THEME_TYPES } from '@/app/lib/constants';
+import { THEME_TYPES } from '@/utils/constants';
 
 const ThemeToggle: React.FC = () => {
     const theme = useTheme();

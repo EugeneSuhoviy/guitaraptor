@@ -1,6 +1,6 @@
 'use client'
 
-import { createClient } from "@/app/lib/supabase/client"
+import { createClient } from "@/utils/supabase/client"
 import { baseUrl } from "@/app/config";
 
 const LoginContainer: React.FC = () => {

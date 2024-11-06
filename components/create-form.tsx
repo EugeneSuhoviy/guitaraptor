@@ -1,6 +1,6 @@
-import { createExercise } from "@/app/lib/actions";
+import { createExercise } from "@/utils/actions";
 import BpmRange from "./ui/bpm-range";
-import LoadingBtn from "@/app/components/loading-btn";
+import LoadingBtn from "@/components/loading-btn";
 
 export default async function CreateForm() {
     return <form action={createExercise}>

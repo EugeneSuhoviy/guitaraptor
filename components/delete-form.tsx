@@ -1,4 +1,4 @@
-import { deleteExercise } from '@/app/lib/actions'
+import { deleteExercise } from '@/utils/actions'
 import LoadingBtn from './loading-btn';
 
 export default function DeleteForm({ id }: { id: number }) {

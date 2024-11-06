@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
-import ThemeToggle from "@/app/components/ui/theme-toggle";
+import ThemeToggle from "@/components/ui/theme-toggle";
 import LogoutBtn from "./login/logout-btn";
 
 export default function Header() {

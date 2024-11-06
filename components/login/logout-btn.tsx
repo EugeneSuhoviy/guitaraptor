@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { createClient } from "@/app/lib/supabase/client"
+import { createClient } from "@/utils/supabase/client"
 import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/16/solid'
 
 const LogoutBtn: React.FC<{ classes: string }> = ({ classes }) => {
