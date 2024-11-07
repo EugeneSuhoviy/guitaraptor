@@ -17,11 +17,17 @@ interface ExerciseProps {
     name: string,
     bpm: number,
     duration: number,
+    finishDate: string | null,
     handleDelete: (id: number) => void,
-    handleDuplicate: (id: number) => void
+    handleDuplicate: (id: number) => void,
+    handleUpdate: (id: number) => void
 }
 
-export default function Exercise({ id, name, bpm, duration, handleDelete, handleDuplicate }: ExerciseProps) {
+export default function Exercise({ id, name, bpm, duration, finishDate, handleDelete, handleDuplicate, handleUpdate }: ExerciseProps) {
+    const today = new Date().toISOString().split('T')[0];
+
+    const [isFinishedToday, setIsFinishedToday] = useState(finishDate?.split('T')[0] === today);
+    
     const {
         attributes,
         listeners,
@@ -92,8 +98,14 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
         });
     }
 
-    function handleReset() {
+    function handleClose() {
         setRunningExerciseId(null);
+        updateFinishDate(id);
+    }
+
+    function updateFinishDate(id: number) {
+        setIsFinishedToday(true);
+        handleUpdate(id)
     }
 
     function handleDropdownClick() {
@@ -117,7 +129,7 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
 
     return <>
         <li className="bg-base-300 rounded-xl mb-2" ref={setNodeRef} style={style}>
-            <div className="bg-base-200 rounded-xl">
+            <div className={`rounded-xl ${isFinishedToday ? 'bg-accent' : 'bg-base-200'}`}>
                 <div className="mb-1 w-full flex items-center p-5" >
                     <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
                         {isStarted ? <StopIcon className="size-4" /> : <PlayIcon className="size-4" />}
@@ -137,7 +149,7 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
                             </div>
                         )}
                     </div>
-                    {isStarted && <CountdownTimer initialTime={duration} onReset={handleReset} />}
+                    {isStarted && <CountdownTimer initialTime={duration} onClose={handleClose} />}
 
                     {!runningExerciseId && (
                         <>

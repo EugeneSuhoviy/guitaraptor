@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation';
-import { Database } from './database.types';
+
 interface Exercise {
     id: number,
     created_at: string,

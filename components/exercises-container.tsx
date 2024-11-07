@@ -18,7 +18,8 @@ interface ExercisesProps {
     duration: number,
     comment: string,
     order: number,
-    user_id?: string
+    user_id?: string,
+    finish_date?: string
 }
 
 interface ExercisesContainerProps {
@@ -99,6 +100,18 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
         }
     }
 
+    async function handleUpdate(id: number) {
+        const { error } = await supabase
+            .from('exercises')
+            .update({ finish_date: new Date().toISOString() })
+            .eq('id', id);
+
+        if (error) {
+            console.error('Error updating exercise:', error);
+            return
+        }
+    }
+
     async function handleDuplicate(id: number) {
         const duplicatedExercise = copyExercises.find(exercise => exercise.id === id)
 
@@ -120,7 +133,6 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
                 duration: duplicatedExercise.duration as number,
                 comment: duplicatedExercise.comment as string,
                 user_id: duplicatedExercise.user_id
-
             })
             .select();
 
@@ -163,8 +175,10 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
                                     bpm={item.bpm}
                                     duration={item.duration}
                                     id={item.id}
+                                    finishDate={item.finish_date || null}
                                     handleDelete={handleDelete}
                                     handleDuplicate={handleDuplicate}
+                                    handleUpdate={handleUpdate}
                                 />
                             })}
                         </ul>
