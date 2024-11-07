@@ -8,11 +8,7 @@ const CountdownTimer: React.FC<{ initialTime: number, onReset: () => void }> = (
     const [isPaused, setIsPaused] = useState(false);
     const ref = useRef<HTMLDialogElement>(null);
 
-    function onPause() {
-        setIsPaused((prevState) => {
-            return !prevState
-        });
-    }
+    const onPause = () => setIsPaused((prevState) => !prevState)
 
     useEffect(() => {
         const timerInterval = setInterval(() => {
@@ -36,7 +32,7 @@ const CountdownTimer: React.FC<{ initialTime: number, onReset: () => void }> = (
         return () => {
             clearInterval(timerInterval)
         };
-    }, [isPaused, onReset]);
+    }, [isPaused]);
 
     // const hours = Math.floor(timeRemaining / 3600);
     const minutes = Math.floor((timeRemaining % 3600) / 60);

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import CountdownTimer from './countdown-timer';
 import { useWakeLock } from 'react-screen-wake-lock';
-import { useStore } from '@/app/store/exercise';
+import { useStore } from '@/store/exercise';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Bars2Icon as Bars2IconOutline } from '@heroicons/react/24/outline';
@@ -117,7 +117,6 @@ export default function Exercise({ id, name, bpm, duration, handleDelete, handle
 
     return <>
         <li className="bg-base-300 rounded-xl mb-2" ref={setNodeRef} style={style}>
-
             <div className="bg-base-200 rounded-xl">
                 <div className="mb-1 w-full flex items-center p-5" >
                     <button className={`btn ${isStarted ? 'btn-secondary' : 'btn-primary'} mr-5`} onClick={handleClick}>
