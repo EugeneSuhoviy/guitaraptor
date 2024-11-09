@@ -8,8 +8,8 @@ import { createClient } from "@/utils/supabase/client";
 import Link from 'next/link'
 import { PlusIcon } from '@heroicons/react/24/solid'
 import Exercise from "./exercise";
+import Confetti from 'react-confetti-boom';
 
-const supabase = createClient();
 interface ExercisesProps {
     id: number,
     created_at: string,
@@ -27,9 +27,11 @@ interface ExercisesContainerProps {
 }
 
 export default function ExercisesContainer({ exercises }: ExercisesContainerProps) {
+    const supabase = createClient();
     const [copyExercises, setCopyExercises] = useState<ExercisesProps[]>([...exercises]);
     const getExercisesPos = (id: UniqueIdentifier | undefined) => copyExercises.findIndex((exercise) => exercise.id === id);
     const id = useId();
+    const [isExploding, setIsExploding] = useState(false);
 
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
@@ -106,10 +108,19 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
             .update({ finish_date: new Date().toISOString() })
             .eq('id', id);
 
+            handleExplode();
         if (error) {
             console.error('Error updating exercise:', error);
             return
         }
+    }
+
+    function handleExplode() {
+        setIsExploding(true);
+
+        setTimeout(function () {
+            setIsExploding(false);
+        }, 3000);
     }
 
     async function handleDuplicate(id: number) {
@@ -164,6 +175,7 @@ export default function ExercisesContainer({ exercises }: ExercisesContainerProp
 
     return <>
         <div className="max-w-3xl mx-auto">
+        {isExploding && <Confetti mode="boom" particleCount={50} colors={['#ff577f', '#ff884b']}  />}
             {copyExercises.length ? <div>
                 <DndContext id={id} sensors={sensors} collisionDetection={closestCorners} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
                     <SortableContext items={copyExercises} strategy={verticalListSortingStrategy}>

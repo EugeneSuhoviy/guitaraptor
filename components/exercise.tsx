@@ -25,7 +25,6 @@ interface ExerciseProps {
 
 export default function Exercise({ id, name, bpm, duration, finishDate, handleDelete, handleDuplicate, handleUpdate }: ExerciseProps) {
     const today = new Date().toISOString().split('T')[0];
-
     const [isFinishedToday, setIsFinishedToday] = useState(finishDate?.split('T')[0] === today);
     
     const {
